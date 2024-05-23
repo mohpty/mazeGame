@@ -1,0 +1,15 @@
+body {
+    text-align: center;
+}
+canvas {
+    border: 1px solid black;
+    margin-top: 20px;
+}
+
+#buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px; font-size: 16px;
+}
