@@ -1,15 +1,12 @@
 body {
-    text-align: center;
-}
-canvas {
-    border: 1px solid black;
-    margin-top: 20px;
-}
-
-#buttons {
-    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #333;
 }
 
-button {
-    padding: 10px 20px; font-size: 16px;
+#mazeCanvas {
+    border: 1px solid #fff;
 }
