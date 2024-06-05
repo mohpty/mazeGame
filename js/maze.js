@@ -1,7 +1,7 @@
 const canvas = document.getElementById('mazeCanvas');
 const ctx = canvas.getContext('2d');
 
-const canvasSize = 600;
+const canvasSize = 200;
 const cellSize = 20;
 const cols = Math.floor(canvasSize / cellSize);
 const rows = Math.floor(canvasSize / cellSize);
@@ -11,7 +11,7 @@ canvas.height = canvasSize;
 
 const grid = [];
 const walls = [];
-const player = { x: 0, y: 0 };
+const player = { x: 0, y: 0, path: [{x: 0, y: 0}] };
 
 // Directions for neighboring cells
 const directions = [
@@ -124,6 +124,8 @@ function drawMaze() {
             cell.draw();
         }
     }
+    drawPath();
+    console.log(player.path);
     drawPlayer();
 }
 
@@ -132,6 +134,25 @@ function drawPlayer() {
     ctx.fillRect(player.x * cellSize + 2, player.y * cellSize + 2, cellSize - 4, cellSize - 4);
 }
 
+function drawPath() {
+    ctx.fillStyle = 'rgba(0, 255, 255, 0.2)'; // Semi-transparent green
+    player.path.forEach(position => {
+        ctx.fillRect(position.x * cellSize + 2, position.y * cellSize + 2, cellSize - 4, cellSize - 4);
+    });
+}
+
+function updateArray(array, newDict, prevDict) {
+    // Check if the dictionary exists in the array
+    const index = array.findIndex(item => item.x === newDict.x && item.y === newDict.y);
+    const oldIndex = array.findIndex(item => item.x === prevDict.x && item.y === prevDict.y)
+    if (index !== -1) {
+        // If it exists, remove it
+        array.splice(oldIndex, 1);
+    } else {
+        // If it doesn't exist, add it
+        array.push(newDict);
+    }
+}
 function movePlayer(dx, dy) {
     if (gameWon) return;
 
@@ -148,12 +169,39 @@ function movePlayer(dx, dy) {
             (dy === 1 && !currentCell.walls[2]) ||
             (dy === -1 && !currentCell.walls[0])
         ) {
+            // Animate player movement
+            animatePlayerMove(player.x, player.y, newX, newY);
+            updateArray(player.path, {x: newX, y: newY}, { x: player.x, y: player.y });
             player.x = newX;
             player.y = newY;
-            drawMaze();
             checkWin();
         }
     }
+}
+
+function animatePlayerMove(fromX, fromY, toX, toY) {
+    const startTime = performance.now();
+    const duration = 100; // Duration in milliseconds
+
+    function animate(time) {
+        const elapsed = time - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+
+        const currentX = fromX + (toX - fromX) * progress;
+        const currentY = fromY + (toY - fromY) * progress;
+
+        drawMaze();
+        ctx.fillStyle = 'red';
+        ctx.fillRect(currentX * cellSize + 2, currentY * cellSize + 2, cellSize - 4, cellSize - 4);
+
+        if (progress < 1) {
+            requestAnimationFrame(animate);
+        } else {
+            drawMaze(); // Final drawing at the destination position
+        }
+    }
+
+    requestAnimationFrame(animate);
 }
 
 function checkWin() {
