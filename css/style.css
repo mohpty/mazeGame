@@ -161,10 +161,18 @@ font-style: normal;
 
 
 .gameMessages{
-    color:gold;
     display:none;
     font-family: "Silkscreen", sans-serif;
     font-weight: 400;
+}
+.levelWonMessage{
+    color:whitesmoke;
+}
+.gameWonMessage{
+    color:gold;
+}
+.timeUpMessage{
+    color: rgb(202, 29, 29);
 }
 
 .levelNumberContainer{

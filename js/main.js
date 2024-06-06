@@ -76,7 +76,7 @@ $('.nextLevelButton').click(()=>{
 // Countdown
 var countdownInterval;
 function initCountdown() {
-    var seconds = 90;
+    var seconds = 3;
     function updateCountdown() {
       var minutes = Math.floor(seconds / 60);
       var remainingSeconds = seconds % 60;
@@ -90,7 +90,15 @@ function initCountdown() {
       if (seconds === 0) {
         // Timer finished! You can optionally add an action here.
         clearInterval(countdownInterval);
-        $('.gameMessages').html("Time's Up<br>Your score is " + PLAYERLVL-1 + "/10");
+        // alert("YELELE");
+        var timeUp = "Time's Up<br>Your score is " + (PLAYERLVL - 1) +"/10";
+        $('.gameMessages').html(timeUp);
+        
+        // Add coloring class based on the content of the message
+        $('.gameMessages').addClass('timeUpMessage');
+        $('.gameMessages').removeClass('gameWonMessage');
+        $('.gameMessages').removeClass('levelWonMessage');
+        $('.gameMessages').fadeIn('fast');
       }
   
       seconds--;

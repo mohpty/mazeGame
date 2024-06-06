@@ -230,17 +230,27 @@ function checkWin() {
         endTime = new Date();
         gameWon = true;
         stopCountdown();
-        if (PLAYERLVL === 10)
+        if (PLAYERLVL === 1)
         {
-            // customModal('winGame');
             $('.gameMessages').html("Congratulations<br> You've completed the game!");
+            
+            // Add coloring class based on the content of the message
+            $('.gameMessages').addClass('gameWonMessage');
+            $('.gameMessages').removeClass('levelWonMessage');
+            $('.gameMessages').removeClass('timeUpMessage');
+
             $('.gameMessages').fadeIn("slow");
+
         }
         
         else
         {
-            // customModal('winLevel');
             $('.gameMessages').html("Level <strong>" + PLAYERLVL + "</strong> Completed");
+            
+            // Add coloring class based on the content of the message
+            $('.gameMessages').addClass('levelWonMessage');
+            $('.gameMessages').removeClass('gameWonMessage');
+            $('.gameMessages').removeClass('timeUpMessage');
             $('.gameMessages').fadeIn("slow");
             
             $('.mazeButtons .nextLevelButton').fadeIn('slow');
