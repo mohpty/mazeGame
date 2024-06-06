@@ -3,18 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maze Generator</title>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Maze Mania</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body>
+    <h2 class='title display-3 silkscreen-regular'>Maze Mania</h2>
     <div class="mainMenu">
-        <h2>Maze Mania</h2>
+        <ul >
+            <li class="h1 silkscreen-regular">
+                <div id='startGameButton' class='menuButton' onclick="startGameMenu()">
+                    Start Game
+                </div>
+            </li>
+            <li class="h1 silkscreen-regular">
+                <div id='creditsButton' class='menuButton' >
+                    Credits
+                </div>
+            </li>
+            
+            
+        </ul>
     </div>
+    <div class="credits silkscreen-regular">
+        Designed and coded by: <span>Mohammad Fathi</span>
+        <br>Github: <span>mohpty</span><br>
+        Email: <span>mohfabdou@gmail.com</span>
+        <br>
+        <div id='creditsBackButton' class='Button'><- Back</div>
+    </div>
+    <div class="modal">
+        <p class='h2'> 
+            Level <strong></strong> <span >Completed</span>
+        </p>
+        <span class='button'></span>
+    </div>
+
+    
     <div class='mazeContainer'>
         <canvas id="mazeCanvas"></canvas>
+        <div class='mazeButtons'>
+            <div id='countdown' class='silkscreen-regular'></div>            
+            <div class='Button mazeBackButton silkscreen-regular'><- Back</div>
+            <!-- <div id='mazeResetButton' class='Button silkscreen-regular'>Reset</div> -->
+        </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="js/bootstrap.min.js"></script>
-    <!-- <script src="js/maze.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script src="js/maze.js"></script>
+    <script src='js/main.js'></script>
 </body>
 </html>

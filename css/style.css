@@ -1,12 +1,160 @@
+p,h1,h2,h3,h4,div,span{
+    user-select: none;
+}
 body {
+    margin: 0;
+    background-color: #333;
+    padding-top:50px;
+    overflow:hidden;
+}
+.mainMenu{
+    padding-top:20px;
+    margin:auto;
+    text-align:center;
+    /* border:1px solid white; */
+}
+.title{
+    color: whitesmoke;
+    display:block;
+    text-align: center;
+    transition:all 500ms;
+}
+.mainMenu ul{
+    margin:auto;
+    padding:0;
+    text-decoration:none;
+    list-style-type: none;
+}
+.menuButton{
+    width:fit-content;
+    margin:auto;
+    color:whitesmoke;
+    transition:all 200ms;
+}
+.menuButton:hover{
+    cursor: pointer;
+    background-color:whitesmoke;
+    color:#3b3b3b;
+    padding: 5px 10px;
+    transition:all 200ms; 
+}
+
+#startGameButton:hover{
+    color:rgb(205, 31, 31);
+    padding: 5px 10px;
+    transition: all 200ms;
+}
+
+#creditsButton:hover{
+    color:green;
+    padding: 5px 10px;
+    transition: all 200ms;
+}
+
+.credits{
+    display:none;
+    text-align:center;
+    margin:auto;
+    width:60%;
+    color:whitesmoke;
+    font-size:25px;
+    padding-top:26px; 
+    text-align:left;
+}
+.credits span{
+    color: green;
+}
+
+.Button{
+    background-color:whitesmoke;
+    color:#3b3b3b;
+    width:100px;
+    margin:auto;
+    margin-top:15px;
+    cursor: pointer;
+    padding: 5px 10px;
+    transition: all 250ms;
+    border:2px solid whitesmoke;
+}
+.Button:hover{
+    background-color:#3b3b3b;
+    color:whitesmoke;
+    
+}
+
+#countdown{
+    color:whitesmoke;
+}
+.mazeContainer{
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #333;
+    display:none;
+    text-align:center;
+    transition: all 250ms;
 }
-
 #mazeCanvas {
     border: 1px solid #fff;
+    display:none;
+    height: 400px;
+    width: 400px;
+    transition: all 250ms;
+}
+.mazeButtons{
+    padding-left:20px;
+}
+
+
+.silkscreen-regular {
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+.silkscreen-bold {
+font-family: "Silkscreen", sans-serif;
+font-weight: 700;
+font-style: normal;
+}
+.material-symbols-outlined {
+    color:gold;
+    font-size:2.5em;
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
+
+.hide-menu{
+    display:none;
+    transition:all 200ms;
+}
+
+.modal{
+    margin:auto;
+    font-family: "Silkscreen", sans-serif;
+    text-align:center;
+    height:fit-content;
+    background-color:#3b3b3bce;
+    padding: 35px 20px;
+}
+.modal p{
+    color:whitesmoke;
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom:20px;
+}
+
+.modal p span{
+    color: gold;
+}
+
+.modal a{
+    font-size:1.5em;
+}
+.modal a:hover{
+    text-decoration:none;
+    color:lightskyblue;
 }

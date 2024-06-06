@@ -1,17 +1,14 @@
-const canvas = document.getElementById('mazeCanvas');
-const ctx = canvas.getContext('2d');
 
-const canvasSize = 200;
-const cellSize = 20;
-const cols = Math.floor(canvasSize / cellSize);
-const rows = Math.floor(canvasSize / cellSize);
+let canvas = document.getElementById('mazeCanvas');
+let ctx = canvas.getContext('2d');
+var canvasSize = 400;
+var cellSize = 40;
 
-canvas.width = canvasSize;
-canvas.height = canvasSize;
-
-const grid = [];
-const walls = [];
-const player = { x: 0, y: 0, path: [{x: 0, y: 0}] };
+var cols,rows;
+var grid = [];
+var walls = [];
+var player = { x: 0, y: 0, path: [{x: 0, y: 0}] };
+var SOLPATH = [];
 
 // Directions for neighboring cells
 const directions = [
@@ -21,9 +18,11 @@ const directions = [
     { x: -1, y: 0 }  // Left
 ];
 
-let startTime;
-let endTime;
-let gameWon = false;
+var startTime;
+var endTime;
+var gameWon = false;
+
+
 
 class Cell {
     constructor(x, y) {
@@ -48,18 +47,11 @@ class Cell {
     }
 }
 
-// Initialize grid with cells
-for (let y = 0; y < rows; y++) {
-    const row = [];
-    for (let x = 0; x < cols; x++) {
-        const cell = new Cell(x, y);
-        row.push(cell);
-    }
-    grid.push(row);
-}
+
 
 // Prim's algorithm to generate the maze
 function generateMaze() {
+    ctx.clearRect(0, 0, canvasSize, canvasSize);
     const startCell = grid[0][0];
     startCell.visited = true;
     addWalls(startCell);
@@ -78,6 +70,7 @@ function generateMaze() {
         walls.splice(randomWallIndex, 1);
         drawMaze();
     }
+    SOLPATH = solveMaze(grid);
 }
 
 function addWalls(cell) {
@@ -125,7 +118,6 @@ function drawMaze() {
         }
     }
     drawPath();
-    console.log(player.path);
     drawPlayer();
 }
 
@@ -153,6 +145,7 @@ function updateArray(array, newDict, prevDict) {
         array.push(newDict);
     }
 }
+
 function movePlayer(dx, dy) {
     if (gameWon) return;
 
@@ -177,6 +170,34 @@ function movePlayer(dx, dy) {
             checkWin();
         }
     }
+}
+
+function animateSolutionPath(path) {
+    let index = 0;
+
+    function animate() {
+        if (index >= path.length) return; // End of path
+
+        const cell = path[index];
+
+        // Change the background color of the cell to gold
+        ctx.fillStyle = 'gold';
+        ctx.fillRect(cell.x * cellSize, cell.y * cellSize, cellSize, cellSize);
+
+        // Redraw the cell borders to make sure they're visible
+        ctx.strokeStyle = '#fff';
+        ctx.lineWidth = 2;
+        const currentCell = grid[cell.y][cell.x];
+        if (currentCell.walls[0]) ctx.strokeRect(cell.x * cellSize, cell.y * cellSize, cellSize, 0); // Top
+        if (currentCell.walls[1]) ctx.strokeRect(cell.x * cellSize + cellSize, cell.y * cellSize, 0, cellSize); // Right
+        if (currentCell.walls[2]) ctx.strokeRect(cell.x * cellSize, cell.y * cellSize + cellSize, cellSize, 0); // Bottom
+        if (currentCell.walls[3]) ctx.strokeRect(cell.x * cellSize, cell.y * cellSize, 0, cellSize); // Left
+
+        index++;
+        requestAnimationFrame(animate);
+    }
+
+    animate();
 }
 
 function animatePlayerMove(fromX, fromY, toX, toY) {
@@ -208,8 +229,20 @@ function checkWin() {
     if (player.x === cols - 1 && player.y === rows - 1) {
         endTime = new Date();
         gameWon = true;
-        const timeTaken = (endTime - startTime) / 1000;
-        setTimeout(() => alert(`Congratulations! You reached the end in ${timeTaken} seconds.`), 100);
+        stopCountdown();
+        if (PLAYERLVL === 1)
+        {
+            customModal('winGame');
+        }
+        else
+        {
+            customModal('winLevel');
+        }
+        // Modify the modal message
+        
+        // const timeTaken = (endTime - startTime) / 1000;
+        // setTimeout(() => alert(`Congratulations! You reached the end in ${timeTaken} seconds.`), 100);
+        
     }
 }
 
@@ -230,5 +263,103 @@ window.addEventListener('keydown', (event) => {
     }
 });
 
-generateMaze();
-startTime = new Date();
+
+function initGame(level=1){
+    if (level != 1){
+        canvasSize += 80;
+    }
+    cols = Math.floor(canvasSize / cellSize);
+    rows = Math.floor(canvasSize / cellSize);
+    // if (level != 1)
+    // cellSize -= 2;
+    
+    canvas.width = canvasSize;
+    canvas.height = canvasSize;
+
+
+    startTime = null;
+    endTime = null;
+    gameWon = false;
+
+    grid = [];
+    walls = [];
+    player = { x: 0, y: 0, path: [{x: 0, y: 0}] };
+    
+    // Initialize grid with cells
+    for (let y = 0; y < rows; y++) {
+        const row = [];
+        for (let x = 0; x < cols; x++) {
+            const cell = new Cell(x, y);
+            row.push(cell);
+        }
+        grid.push(row);
+    }
+    
+    startGame();
+    
+}
+
+function startGame(){
+    generateMaze();
+    initCountdown();
+    startTime = new Date();
+}
+// generateMaze();
+// startTime = new Date();
+
+
+
+function solveMaze(grid) {
+    const start = { x: 0, y: 0 };
+    const end = { x: cols - 1, y: rows - 1 };
+    const stack = [start];
+    const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+    const prev = Array.from({ length: rows }, () => Array(cols).fill(null));
+
+    visited[start.y][start.x] = true;
+
+    while (stack.length > 0) {
+        const { x, y } = stack.pop();
+
+        // If we reached the end, reconstruct the path
+        if (x === end.x && y === end.y) {
+            const path = [];
+            let current = end;
+            while (current) {
+                path.push(current);
+                current = prev[current.y][current.x];
+            }
+            path.reverse();
+            return path;
+        }
+
+        // Explore neighbors (right, down, left, up)
+        for (const direction of directions) {
+            const nextX = x + direction.x;
+            const nextY = y + direction.y;
+
+            if (nextX >= 0 && nextX < cols && nextY >= 0 && nextY < rows) {
+                const currentCell = grid[y][x];
+                const nextCell = grid[nextY][nextX];
+
+                // Check if there's no wall between currentCell and nextCell
+                if (
+                    (direction.x === 1 && !currentCell.walls[1] && !nextCell.walls[3]) ||
+                    (direction.x === -1 && !currentCell.walls[3] && !nextCell.walls[1]) ||
+                    (direction.y === 1 && !currentCell.walls[2] && !nextCell.walls[0]) ||
+                    (direction.y === -1 && !currentCell.walls[0] && !nextCell.walls[2])
+                ) {
+                    if (!visited[nextY][nextX]) {
+                        visited[nextY][nextX] = true;
+                        prev[nextY][nextX] = { x, y };
+                        stack.push({ x: nextX, y: nextY });
+                    }
+                }
+            }
+        }
+    }
+
+    // If there's no path found, return an empty array
+    return [];
+}
+
