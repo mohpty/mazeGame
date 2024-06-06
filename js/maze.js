@@ -126,7 +126,7 @@ function drawMaze() {
 }
 
 function drawPlayer() {
-    ctx.fillStyle = 'red';
+    ctx.fillStyle = '#8812b0';
     ctx.fillRect(player.x * cellSize + 2, player.y * cellSize + 2, cellSize - 4, cellSize - 4);
 }
 
@@ -217,7 +217,7 @@ function animatePlayerMove(fromX, fromY, toX, toY) {
         const currentY = fromY + (toY - fromY) * progress;
 
         drawMaze();
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = 'rgb(146, 30, 230,0.7)';
         ctx.fillRect(currentX * cellSize + 2, currentY * cellSize + 2, cellSize - 4, cellSize - 4);
 
         if (progress < 1) {
