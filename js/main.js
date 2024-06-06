@@ -1,6 +1,9 @@
 var CANV = document.getElementById('mazeCanvas');
 var CTx = canvas.getContext('2d');
 var PLAYERLVL = 1;
+
+// Credits
+
 function startGameMenu(){
     $('.mainMenu').fadeToggle('slow', function(){
         CTx.clearRect(0, 0, canvasSize, canvasSize);
@@ -39,6 +42,7 @@ $('.mainMenuButton').click(function(){
     alert("U");
     stopCountdown();
 });
+
 // ----------
 
 // Maze Functionality -----
