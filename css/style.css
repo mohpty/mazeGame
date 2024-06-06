@@ -4,7 +4,7 @@ p,h1,h2,h3,h4,div,span{
 body {
     margin: 0;
     background-color: #333;
-    padding-top:50px;
+    padding-top:35px;
     /* overflow:hidden; */
 }
 .mainMenu{
@@ -187,9 +187,11 @@ font-style: normal;
 .nextLevelButton{
     display:none;
 }
-
+.playAgainButton{
+    display:none;
+}
 .mazeControlButtons{
     margin:auto;
     text-align:center;
-    width:50%;
+    width:55%;
 }

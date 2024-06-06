@@ -73,10 +73,22 @@ $('.nextLevelButton').click(()=>{
     $('.gameMessages').fadeOut("fast", ()=>$('.gameMessages').html(""));
 });
 
+$('.playAgainButton').click(()=>{
+    PLAYERLVL = 1;
+    stopCountdown();
+    $('.levelNumber').text(PLAYERLVL);
+    CTx.clearRect(0, 0, canvasSize, canvasSize);
+    $('.mazeContainer').fadeIn('fast', function(){
+        initGame(PLAYERLVL);
+    });
+    $('.playAgainButton').fadeOut('fast');
+    $('.gameMessages').fadeOut("fast", ()=>$('.gameMessages').html(""));
+});
+
 // Countdown
 var countdownInterval;
 function initCountdown() {
-    var seconds = 3;
+    var seconds = 90;
     function updateCountdown() {
       var minutes = Math.floor(seconds / 60);
       var remainingSeconds = seconds % 60;
@@ -99,6 +111,9 @@ function initCountdown() {
         $('.gameMessages').removeClass('gameWonMessage');
         $('.gameMessages').removeClass('levelWonMessage');
         $('.gameMessages').fadeIn('fast');
+
+        // View the play again button
+        $('.playAgainButton').fadeIn('fast');
       }
   
       seconds--;
