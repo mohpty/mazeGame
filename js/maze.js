@@ -37,7 +37,7 @@ class Cell {
         const y = this.y * cellSize;
 
         ctx.strokeStyle = '#fff';
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 4;
 
         // Draw walls
         if (this.walls[0]) ctx.strokeRect(x, y, cellSize, 0); // Top
@@ -70,7 +70,11 @@ function generateMaze() {
         walls.splice(randomWallIndex, 1);
         drawMaze();
     }
-    SOLPATH = solveMaze(grid);
+    console.log(grid[0][0].walls);
+    var lastOne = grid[grid.length-1][grid.length-1];
+    lastOne.walls[1] = false;
+    drawMaze();
+    // .walls[1] = true;
 }
 
 function addWalls(cell) {
@@ -348,58 +352,58 @@ function startGame(){
 // startTime = new Date();
 
 
+// Function to solve the maze using DFS
+// function solveMaze(grid) {
+//     const start = { x: 0, y: 0 };
+//     const end = { x: cols - 1, y: rows - 1 };
+//     const stack = [start];
+//     const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+//     const prev = Array.from({ length: rows }, () => Array(cols).fill(null));
 
-function solveMaze(grid) {
-    const start = { x: 0, y: 0 };
-    const end = { x: cols - 1, y: rows - 1 };
-    const stack = [start];
-    const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
-    const prev = Array.from({ length: rows }, () => Array(cols).fill(null));
+//     visited[start.y][start.x] = true;
 
-    visited[start.y][start.x] = true;
+//     while (stack.length > 0) {
+//         const { x, y } = stack.pop();
 
-    while (stack.length > 0) {
-        const { x, y } = stack.pop();
+//         // If we reached the end, reconstruct the path
+//         if (x === end.x && y === end.y) {
+//             const path = [];
+//             let current = end;
+//             while (current) {
+//                 path.push(current);
+//                 current = prev[current.y][current.x];
+//             }
+//             path.reverse();
+//             return path;
+//         }
 
-        // If we reached the end, reconstruct the path
-        if (x === end.x && y === end.y) {
-            const path = [];
-            let current = end;
-            while (current) {
-                path.push(current);
-                current = prev[current.y][current.x];
-            }
-            path.reverse();
-            return path;
-        }
+//         // Explore neighbors (right, down, left, up)
+//         for (const direction of directions) {
+//             const nextX = x + direction.x;
+//             const nextY = y + direction.y;
 
-        // Explore neighbors (right, down, left, up)
-        for (const direction of directions) {
-            const nextX = x + direction.x;
-            const nextY = y + direction.y;
+//             if (nextX >= 0 && nextX < cols && nextY >= 0 && nextY < rows) {
+//                 const currentCell = grid[y][x];
+//                 const nextCell = grid[nextY][nextX];
 
-            if (nextX >= 0 && nextX < cols && nextY >= 0 && nextY < rows) {
-                const currentCell = grid[y][x];
-                const nextCell = grid[nextY][nextX];
+//                 // Check if there's no wall between currentCell and nextCell
+//                 if (
+//                     (direction.x === 1 && !currentCell.walls[1] && !nextCell.walls[3]) ||
+//                     (direction.x === -1 && !currentCell.walls[3] && !nextCell.walls[1]) ||
+//                     (direction.y === 1 && !currentCell.walls[2] && !nextCell.walls[0]) ||
+//                     (direction.y === -1 && !currentCell.walls[0] && !nextCell.walls[2])
+//                 ) {
+//                     if (!visited[nextY][nextX]) {
+//                         visited[nextY][nextX] = true;
+//                         prev[nextY][nextX] = { x, y };
+//                         stack.push({ x: nextX, y: nextY });
+//                     }
+//                 }
+//             }
+//         }
+//     }
 
-                // Check if there's no wall between currentCell and nextCell
-                if (
-                    (direction.x === 1 && !currentCell.walls[1] && !nextCell.walls[3]) ||
-                    (direction.x === -1 && !currentCell.walls[3] && !nextCell.walls[1]) ||
-                    (direction.y === 1 && !currentCell.walls[2] && !nextCell.walls[0]) ||
-                    (direction.y === -1 && !currentCell.walls[0] && !nextCell.walls[2])
-                ) {
-                    if (!visited[nextY][nextX]) {
-                        visited[nextY][nextX] = true;
-                        prev[nextY][nextX] = { x, y };
-                        stack.push({ x: nextX, y: nextY });
-                    }
-                }
-            }
-        }
-    }
-
-    // If there's no path found, return an empty array
-    return [];
-}
+//     // If there's no path found, return an empty array
+//     return [];
+// }
 
