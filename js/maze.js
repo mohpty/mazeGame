@@ -271,7 +271,7 @@ function checkWin() {
 }
 
 // Adding the mobile touchscreen swipe
-const hammer = new Hammer(canvas);
+const hammer = new Hammer(document.querySelector('html'));
 hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
 hammer.on('swipeleft', function(event) {
     movePlayer(-1, 0);
