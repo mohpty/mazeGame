@@ -266,22 +266,24 @@ function checkWin() {
     }
 }
 
+// Adding the mobile touchscreen swipe
 const hammer = new Hammer(canvas);
-hammer.on('swipeup', function(event) {
-    movePlayer(0, -1);
-});
-  
+hammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+hammer.on('swipeleft', function(event) {
+    movePlayer(-1, 0);
+});  
 hammer.on('swiperight', function(event) {
     movePlayer(1, 0);
 });
 
+hammer.on('swipeup', function(event) {
+    movePlayer(0, -1);
+});
+  
+
 hammer.on('swipedown', function(event) {
     movePlayer(0, 1);
 });
-
-hammer.on('swipeleft', function(event) {
-    movePlayer(-1, 0);
-});  
   
   
 window.addEventListener('keydown', (event) => {
