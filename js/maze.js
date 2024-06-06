@@ -266,6 +266,24 @@ function checkWin() {
     }
 }
 
+const hammer = new Hammer(canvas);
+hammer.on('swipeup', function(event) {
+    movePlayer(0, -1);
+});
+  
+hammer.on('swiperight', function(event) {
+    movePlayer(1, 0);
+});
+
+hammer.on('swipedown', function(event) {
+    movePlayer(0, 1);
+});
+
+hammer.on('swipeleft', function(event) {
+    movePlayer(-1, 0);
+});  
+  
+  
 window.addEventListener('keydown', (event) => {
     switch (event.key) {
         case 'ArrowUp':
