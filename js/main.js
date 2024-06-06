@@ -46,7 +46,8 @@ function customModal(state){
             $('.mazeContainer').fadeOut('fast', function(){
                 $('.mainMenu').fadeIn('fast');
             });
-        })    
+        });
+        stopCountdown();
     }
     
     $('.modal').modal({
@@ -81,6 +82,7 @@ $('#creditsBackButton').click(function(){
 
 $('.mainMenuButton').click(function(){
     alert("U");
+    stopCountdown();
 });
 // ----------
 
@@ -89,10 +91,12 @@ $('.mazeBackButton').click(function(){
     $('.mazeContainer').fadeOut('slow', function(){
         $('.mainMenu').fadeIn('slow');
     });
+    stopCountdown();
 });
 
 $('#mazeResetButton').click(function(){
     initGame();
+    stopCountdown();
 });
 
 
