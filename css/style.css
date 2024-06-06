@@ -5,7 +5,7 @@ body {
     margin: 0;
     background-color: #333;
     padding-top:50px;
-    overflow:hidden;
+    /* overflow:hidden; */
 }
 .mainMenu{
     padding-top:20px;
@@ -157,4 +157,31 @@ font-style: normal;
 .modal a:hover{
     text-decoration:none;
     color:lightskyblue;
+}
+
+
+.gameMessages{
+    color:gold;
+    display:none;
+    font-family: "Silkscreen", sans-serif;
+    font-weight: 400;
+}
+
+.levelNumberContainer{
+    color:whitesmoke;
+    font-size: 1.5em;
+}
+
+.button{
+    display: inline-block;
+}
+
+.nextLevelButton{
+    display:none;
+}
+
+.mazeControlButtons{
+    margin:auto;
+    text-align:center;
+    width:50%;
 }

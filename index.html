@@ -25,9 +25,7 @@
                 <div id='creditsButton' class='menuButton' >
                     Credits
                 </div>
-            </li>
-            
-            
+            </li>            
         </ul>
     </div>
     <div class="credits silkscreen-regular">
@@ -41,15 +39,32 @@
         <p class='h2'> 
             Level <strong></strong> <span >Completed</span>
         </p>
-        <span class='button'></span>
+        <span class='button'>
+            <a href='#' id='' rel='modal:close' class='Button'><span class='silkscreen-bold'><</span>Main Menu</a>
+        </span>
     </div>
 
     
     <div class='mazeContainer'>
+        <div class='levelNumberContainer silkscreen-regular'>Level <span class="levelNumber">1</span></div>
         <canvas id="mazeCanvas"></canvas>
-        <div class='mazeButtons'>
+        <div class="gameMessages">
+            
+        </div>
+        <div class='container mazeButtons'>
             <div id='countdown' class='silkscreen-regular'></div>            
-            <div class='Button mazeBackButton silkscreen-regular'><- Back</div>
+            <div class='row mazeControlButtons'>
+                <div class='col-6 container silkscreen-regular'>
+                    <div class='Button mazeBackButton'>
+                        <strong><</strong>Menu
+                    </div>
+                </div>
+                <div class='col-6 container silkscreen-regular'>
+                    <div class='Button nextLevelButton'>
+                        Next <strong>></strong>
+                    </div>
+                </div>
+            </div>
             <!-- <div id='mazeResetButton' class='Button silkscreen-regular'>Reset</div> -->
         </div>
     </div>

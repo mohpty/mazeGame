@@ -230,13 +230,23 @@ function checkWin() {
         endTime = new Date();
         gameWon = true;
         stopCountdown();
-        if (PLAYERLVL === 1)
+        if (PLAYERLVL === 10)
         {
-            customModal('winGame');
+            // customModal('winGame');
+            $('.gameMessages').html("Congratulations<br> You've completed the game!");
+            $('.gameMessages').fadeIn("slow");
         }
+        
         else
         {
-            customModal('winLevel');
+            // customModal('winLevel');
+            $('.gameMessages').html("Level <strong>" + PLAYERLVL + "</strong> Completed");
+            $('.gameMessages').fadeIn("slow");
+            
+            $('.mazeButtons .nextLevelButton').fadeIn('slow');
+            // Update level number, and print it on the screen
+            
+
         }
         // Modify the modal message
         

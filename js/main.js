@@ -13,50 +13,6 @@ function startGameMenu(){
     
 }
 // ----------
-// Modal Customization
-function customModal(state){
-    $('.modal p .h2').html("");
-    $('.modal .button').html(""); // Clear the current innerHTML
-    if(state === 'winLevel')
-    {
-        var newContent = $('<p class="h2">Level <strong></strong> <span>Completed</span></p>');
-        $('.modal p.h2').html(newContent.html());
-        $('.modal .h2 strong').text(PLAYERLVL);
-        $('.modal .button').append("<a id='nextLevelButton' rel='modal:close' class='Button'>Next Level <span class='silkscreen-bold'>></span></a>");
-        
-        // Setting the event again because it's a new element
-        // Next level button
-        $('.modal .button a').click(()=>{
-            PLAYERLVL += 1;
-            CTx.clearRect(0, 0, canvasSize, canvasSize);
-            $('.mazeContainer').fadeIn('fast', function(){
-                initGame(PLAYERLVL);
-            });
-        })
-    }
-    else if(state === 'winGame'){
-        var newContent = $('<p class="h2"><span>Congratulations<br>you finished the game!</span></p>');
-        $('.modal p.h2').html(newContent.html());
-        $('.modal .button').append("<a rel='modal:close' class='Button mazeBackButton'><span class='silkscreen-bold'><</span>Main Menu</a>");
-        // Setting the event again because it's a new element
-        // Next level button
-        $('.modal .button a').click(()=>{
-            PLAYERLVL = 0;
-            CTx.clearRect(0, 0, canvasSize, canvasSize);
-            $('.mazeContainer').fadeOut('fast', function(){
-                $('.mainMenu').fadeIn('fast');
-            });
-        });
-        stopCountdown();
-    }
-    
-    $('.modal').modal({
-        fadeDuration:100,
-        escapeClose: false,
-        clickClose: false,
-        showClose: false
-    });
-}
 // ----------
 
 // $('.modal').modal({
@@ -89,6 +45,9 @@ $('.mainMenuButton').click(function(){
 // Maze Functionality -----
 $('.mazeBackButton').click(function(){
     $('.mazeContainer').fadeOut('slow', function(){
+        PLAYERLVL = 1;
+        $('.levelNumber').text(PLAYERLVL);
+        $('.gameMessages').text("");
         $('.mainMenu').fadeIn('slow');
     });
     stopCountdown();
@@ -99,6 +58,20 @@ $('#mazeResetButton').click(function(){
     stopCountdown();
 });
 
+$('.nextLevelButton').click(()=>{
+    if (!gameWon)
+        return null;
+
+    PLAYERLVL += 1;
+    stopCountdown();
+    $('.levelNumber').text(PLAYERLVL);
+    CTx.clearRect(0, 0, canvasSize, canvasSize);
+    $('.mazeContainer').fadeIn('fast', function(){
+        initGame(PLAYERLVL);
+    });
+    $('.nextLevelButton').fadeOut('fast');
+    $('.gameMessages').fadeOut("fast", ()=>$('.gameMessages').html(""));
+});
 
 // Countdown
 var countdownInterval;
@@ -116,8 +89,8 @@ function initCountdown() {
   
       if (seconds === 0) {
         // Timer finished! You can optionally add an action here.
-        alert("Time's Up!");
         clearInterval(countdownInterval);
+        $('.gameMessages').html("Time's Up<br>Your score is " + PLAYERLVL-1 + "/10");
       }
   
       seconds--;
