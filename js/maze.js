@@ -230,7 +230,7 @@ function checkWin() {
         endTime = new Date();
         gameWon = true;
         stopCountdown();
-        if (PLAYERLVL === 1)
+        if (PLAYERLVL === 10)
         {
             $('.gameMessages').html("Congratulations<br> You've completed the game!");
             

@@ -8,7 +8,6 @@ function startGameMenu(){
             initGame(PLAYERLVL);
         });
         $('#mazeCanvas').fadeIn('fast');
-
     });
     
 }
@@ -49,6 +48,7 @@ $('.mazeBackButton').click(function(){
         $('.levelNumber').text(PLAYERLVL);
         $('.gameMessages').text("");
         $('.mainMenu').fadeIn('slow');
+        $('.playAgainButton').fadeOut();
     });
     stopCountdown();
 });
