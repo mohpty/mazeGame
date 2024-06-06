@@ -151,7 +151,8 @@ function updateArray(array, newDict, prevDict) {
 }
 
 function movePlayer(dx, dy) {
-    if (gameWon) return;
+    var gameTime = $('#countdown').text();
+    if (gameWon || gameTime === '00:00') return;
 
     const newX = player.x + dx;
     const newY = player.y + dy;

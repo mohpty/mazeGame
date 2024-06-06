@@ -79,8 +79,8 @@ $('.nextLevelButton').click(()=>{
 
 $('.playAgainButton').click(()=>{
     PLAYERLVL = 1;
-    stopCountdown();
     $('.levelNumber').text(PLAYERLVL);
+    stopCountdown();
     CTx.clearRect(0, 0, canvasSize, canvasSize);
     $('.mazeContainer').fadeIn('fast', function(){
         initGame(PLAYERLVL);
@@ -118,6 +118,7 @@ function initCountdown() {
 
         // View the play again button
         $('.playAgainButton').fadeIn('fast');
+        return;
       }
   
       seconds--;
